@@ -1,7 +1,7 @@
 import { BaseEntity } from '@src/app/base';
 import { ENUM_COLUMN_TYPES, ENUM_TABLE_NAMES } from '@src/shared';
 import { Type } from 'class-transformer';
-import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 
 @Entity(ENUM_TABLE_NAMES.ACCOUNT)
@@ -18,9 +18,9 @@ export class Account extends BaseEntity {
   accontNumber?: string;
 
   @Column({ nullable: true })
-  amount?: Number;
+  amount?: string;
 
-  @OneToOne((t) => User, (e) => e.accountTable)
+  @ManyToOne((t) => User, (e) => e.accountTable)
   user?: User;
 
   constructor() {

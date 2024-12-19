@@ -66,7 +66,7 @@ export class User extends BaseEntity {
   userRoles?: UserRole[];
 
   @OneToMany((t) => Account, (e) => e.user)
-  accountTable?: Account;
+  accountTable?: Account[];
 
   @OneToMany(() => TRANSCATION, transaction => transaction.user)
   transactions?: TRANSCATION[];

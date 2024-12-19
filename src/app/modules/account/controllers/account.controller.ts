@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SuccessResponse } from '@src/app/types';
-import {  CreateAccountDTO, FilterAccountDTO, } from '../dtos';
+import {  AddMoneyDTO, CreateAccountDTO, FilterAccountDTO, } from '../dtos';
 import { AccountService } from '../services/account.service';
 import { Account } from '../entities/account.entity';
 import { AuthUser } from '@src/app/decorators';
@@ -41,5 +41,13 @@ export class AccountController {
     @AuthUser() authUser: IAuthUser
   ):Promise<SuccessResponse>{
     return this.service.createAccount(body, authUser)
+  }
+
+  @Patch('add/money:id')
+  async addMoney(
+    @Param('id') id: string,
+    @Body() body: AddMoneyDTO
+  ):Promise<SuccessResponse> {
+    return this.service.addMoney(body, id)
   }
 }

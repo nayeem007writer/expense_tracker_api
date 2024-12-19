@@ -12,7 +12,7 @@ import { WebUserController } from './controllers/user.web.controller';
 
 const entities = [User, UserRole];
 const services = [UserService, UserRoleService];
-const subscribers = [UserSubscriber];
+const subscribers = [];
 const controllers = [UserController];
 const webControllers = [WebUserController];
 const modules = [HelpersModule, AclModule];

@@ -35,6 +35,6 @@ export class CreateAccountDTO {
   })
   @IsNotEmpty()
   @IsNumber()
-  readonly amount!: number;
+  readonly amount!: string;
 
 }
