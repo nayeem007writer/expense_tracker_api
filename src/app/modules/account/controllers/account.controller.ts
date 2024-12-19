@@ -10,15 +10,17 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SuccessResponse } from '@src/app/types';
-import {  FilterAccountDTO, } from '../dtos';
+import {  CreateAccountDTO, FilterAccountDTO, } from '../dtos';
 import { AccountService } from '../services/account.service';
 import { Account } from '../entities/account.entity';
+import { AuthUser } from '@src/app/decorators';
+import { IAuthUser } from '@src/app/interfaces';
 
 @ApiTags('Account')
 @ApiBearerAuth()
 @Controller('account')
 export class AccountController {
-  RELATIONS = ['userRoles', 'userRoles.role'];
+  RELATIONS = ['user',];
   constructor(private readonly service: AccountService) {}
 
   @Get()
@@ -26,5 +28,18 @@ export class AccountController {
     @Query() query: FilterAccountDTO
   ): Promise<SuccessResponse | Account[]> {
     return this.service.findAllBase(query, { relations: this.RELATIONS });
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string): Promise<Account> {
+    return this.service.findByIdBase(id, { relations: this.RELATIONS });
+  }
+
+  @Post()
+  async create(
+    @Body() body: CreateAccountDTO,
+    @AuthUser() authUser: IAuthUser
+  ):Promise<SuccessResponse>{
+    return this.service.createAccount(body, authUser)
   }
 }

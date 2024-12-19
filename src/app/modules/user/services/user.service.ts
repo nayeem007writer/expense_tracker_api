@@ -211,7 +211,7 @@ export class UserService extends BaseService<User> {
 
   async registerUser(payload: RegisterDTO): Promise<User> {
     const role = await this.roleService.findOneBase({
-      title: ENUM_ACL_DEFAULT_ROLES.SUPER_ADMIN,
+      title: ENUM_ACL_DEFAULT_ROLES.CUSTOMER,
     });
     const isExist = await this.findOneBase({ email: payload.email });
 

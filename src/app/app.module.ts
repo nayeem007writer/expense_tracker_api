@@ -1,4 +1,4 @@
-import { CacheModule, Module } from '@nestjs/common';
+import { CacheModule, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { DatabaseModule } from '@src/database/database.module';
@@ -12,6 +12,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { AccountModule } from './modules/account/account.module';
 import { TranscationModule } from './modules/transcation/transcation.module';
+import { AuthMiddleware } from './middlewares';
+import { ENV } from '@src/env';
 
 const MODULES = [
   CacheModule.register({
@@ -43,4 +45,29 @@ const MODULES = [
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        { path: `/${ENV.api.API_PREFIX}/auth/login`, method: RequestMethod.POST },
+        { path: "/auth/forgot-password/otp/send", method: RequestMethod.POST },
+        { path: `/${ENV.api.API_PREFIX}/web/auth/send-otp`, method: RequestMethod.POST },
+        { path: `/${ENV.api.API_PREFIX}/auth/reset-password-verify`, method: RequestMethod.POST },
+        { path: `/${ENV.api.API_PREFIX}/auth/register`, method: RequestMethod.POST },
+        { path: `/${ENV.api.API_PREFIX}/web/auth/verify-otp`, method: RequestMethod.POST },
+        { path: "/users/send-sms-test", method: RequestMethod.POST },
+        { path: `/${ENV.api.API_PREFIX}/users/referred-by-me`, method: RequestMethod.GET },
+      ).forRoutes("*");
+    // .forRoutes(
+    //   { path: `/${ENV.api.API_PREFIX}/web/wishlists`, method: RequestMethod.POST },
+    //   { path: `/${ENV.api.API_PREFIX}/web/cart-itmes`, method: RequestMethod.POST },
+    //   { path: `/${ENV.api.API_PREFIX}/web/cart-itmes/{id}`, method: RequestMethod.PUT },
+    //   { path: `/${ENV.api.API_PREFIX}/web/cart-itmes/{id}`, method: RequestMethod.DELETE },
+    //   { path: `/${ENV.api.API_PREFIX}/web/carts/my`, method: RequestMethod.GET },
+    // );
+    // consumer.apply(AuthMiddleware).exclude("/api/v1/auth").forRoutes("*");
+    // consumer.apply(ErrorHandlerMiddleware).forRoutes("*");
+    // consumer.apply(RequestModifierMiddleware).forRoutes("*");
+  }
+}
