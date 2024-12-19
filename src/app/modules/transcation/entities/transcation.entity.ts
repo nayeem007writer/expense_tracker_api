@@ -23,7 +23,7 @@ export class TRANSCATION extends BaseEntity {
   source?: string;
 
   @Column({ unique: true, nullable: true })
-  amount?: number;
+  amount?: string;
 
   @Column({ unique: true, nullable: true,default:'income' })
   type?: string;

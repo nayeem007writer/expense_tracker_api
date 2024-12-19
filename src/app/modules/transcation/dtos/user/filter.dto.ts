@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumberString, IsOptional, IsString, IsEmail } from 'class-validator';
 
-export class FilterUserDTO {
+export class FilterTranscationDTO {
   @ApiProperty({
     type: Number,
     description: 'Limit the number of results',

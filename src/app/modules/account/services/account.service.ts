@@ -33,7 +33,7 @@ export class AccountService extends BaseService<Account> {
       amount : body.amount
     }
     console.log(account)
-    const v =await this.accountRepository.save(account);
+    const v = await this.accountRepository.save(account);
     console.log(v);
     return new SuccessResponse('account created successfully', v)
   }
