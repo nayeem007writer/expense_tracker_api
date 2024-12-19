@@ -29,7 +29,7 @@ export class TranscationService extends BaseService<TRANSCATION> {
 
         if(!findAccount)
           throw new BadRequestException('Account not found!')
-        if(parseFloat(findAccount.amount) > parseFloat(body.amount)) {
+        if(parseFloat(findAccount.amount) > parseFloat(body.amount) && parseFloat(findAccount.amount) > 0) {
           let amount = parseFloat(findAccount.amount) - parseFloat(body.amount);
           let transactionPayload = {
             amount: amount.toString(),
