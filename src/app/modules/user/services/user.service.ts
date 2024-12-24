@@ -218,11 +218,12 @@ export class UserService extends BaseService<User> {
     if (isExist) {
       throw new ConflictException('Email already exists');
     } else {
+      const hashPassword = await this.bcrypt.hash(payload.password,10);
       const createdUser = await this.createOneBase({
         firstName: payload.firstName,
         lastName: payload.lastName,
         email: payload.email,
-        password: payload.password,
+        password: hashPassword,
         phoneNumber: payload?.phoneNumber,
       });
 

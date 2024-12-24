@@ -62,6 +62,7 @@ export const ENV = {
     synchronize: toBool(process.env.DB_SYNCHRONIZE),
     logging: toBool(process.env.DB_LOGGING),
   },
+  IMAGE_MAX_SIZE: toNumber(process.env.IMAGE_MAX_SIZE) || 1024 * 1024 * 5,
 };
 
 export const ormConfig = {

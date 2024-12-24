@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SuccessResponse } from '@src/app/types';
@@ -15,6 +16,7 @@ import { TRANSCATION } from '../entities/transcation.entity';
 import { TranscationService } from '../services/transcation.service';
 import { IAuthUser } from '@src/app/interfaces';
 import { AuthUser } from '@src/app/decorators';
+import { TransferrTranscationDTO } from '../dtos/transfer/update.dto';
 
 @ApiTags('Transcation')
 @ApiBearerAuth()
@@ -35,13 +37,22 @@ export class TranscationController {
     return this.service.findByIdBase(id, { relations: this.RELATIONS });
   }
 
-    @Post(':id')
-    async createTranscation(
-      @Body() body: CreateTranscationDTO,
-      @AuthUser() authUser: IAuthUser,
-      @Param('id') id: string
-    ):Promise<SuccessResponse | TRANSCATION>{
-      return this.service.createTranscation(body, authUser,id)
-    }
+  @Post(':id')
+  async createTranscation(
+    @Body() body: CreateTranscationDTO,
+    @AuthUser() authUser: IAuthUser,
+    @Param('id') id: string
+  ):Promise<SuccessResponse | TRANSCATION>{
+    return this.service.createTranscation(body, authUser,id)
+  }
+
+  @Post('transfer')
+  async transferMoneyToAnotherAccount(
+    @Body() body: TransferrTranscationDTO,
+    @AuthUser() authuser: IAuthUser,
+  ):Promise<SuccessResponse | TRANSCATION> {
+    console.log(body)
+    return this.service.transferMoneyToAnotherAccount(body, authuser)
+  }
 
 }

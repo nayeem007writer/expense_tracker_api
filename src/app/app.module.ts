@@ -14,6 +14,7 @@ import { AccountModule } from './modules/account/account.module';
 import { TranscationModule } from './modules/transcation/transcation.module';
 import { AuthMiddleware } from './middlewares';
 import { ENV } from '@src/env';
+import { PostModule } from './modules/derectory/post.module';
 
 const MODULES = [
   CacheModule.register({
@@ -27,7 +28,8 @@ const MODULES = [
   AuthModule,
   UserModule,
   AccountModule,
-  TranscationModule
+  TranscationModule,
+  PostModule
 ];
 @Module({
   imports: [...MODULES],

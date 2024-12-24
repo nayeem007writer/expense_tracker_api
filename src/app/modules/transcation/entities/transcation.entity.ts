@@ -31,6 +31,13 @@ export class TRANSCATION extends BaseEntity {
   @ManyToOne(() => User, user => user.transactions) 
   user?: User;
 
+  @Column({nullable: true})
+  idFrom?: string;
+  
+  @Column({nullable: true})
+  idTo?: string;
+
+
   constructor() {
     super();
   }

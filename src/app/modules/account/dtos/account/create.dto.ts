@@ -34,7 +34,7 @@ export class CreateAccountDTO {
     example: 'zahid@gmail.com',
   })
   @IsNotEmpty()
-  @IsNumber()
+  @IsString()
   readonly amount!: string;
 
 }
