@@ -11,6 +11,7 @@ export enum ENUM_TABLE_NAMES {
   ACCOUNT = 'accounts',
   TRANSCATION= 'transcations',
   POST = 'posts',
+  PDF = 'pdfs',
 }
 
 export enum ENUM_SEQUENCE {

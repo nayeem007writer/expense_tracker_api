@@ -5,11 +5,14 @@ import { Post } from './entities/post.entity';
 import { PostService } from './services/post.service';
 import { UserService } from '../user/services/user.service';
 import { UserModule } from '../user/user.module';
+import { Pdf } from './entities/pdf.entity';
+import { PdfService } from './services/pdf.service';
+import { PdfController } from './controllers/pdf.controller';
 
-const entities = [Post];
-const services = [PostService,];
+const entities = [Post,Pdf];
+const services = [PostService,PdfService];
 const subscribers = [];
-const controllers = [PostController];
+const controllers = [PostController, PdfController];
 const modules = [UserModule];
 
 @Module({

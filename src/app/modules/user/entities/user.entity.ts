@@ -7,6 +7,7 @@ import { UserRole } from './userRole.entity';
 import { Account } from '../../account/entities/account.entity';
 import { TRANSCATION } from '../../transcation/entities/transcation.entity';
 import { Post } from '../../derectory/entities/post.entity';
+import { Pdf } from '../../derectory/entities/pdf.entity';
 
 @Entity(ENUM_TABLE_NAMES.USERS)
 export class User extends BaseEntity {
@@ -71,6 +72,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => TRANSCATION, transaction => transaction.user)
   transactions?: TRANSCATION[];
+
+  @OneToMany(() => Pdf, pdf => pdf.user)
+  pdf?: Pdf[];
 
   @OneToMany(() => Post, transaction => transaction.user)
   post?: Post[];

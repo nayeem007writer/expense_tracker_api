@@ -40,3 +40,18 @@ export const fixNullPrototype = async (data: any) => {
   export function generateFilename(file) {
     return `${Date.now()}${path.extname(file.originalname)}`;
   }
+
+  export const storagePdfOptions = diskStorage({ 
+    destination: (req, file, cb) => { cb(null, './uploads/pdf'); }, 
+    filename: (req, file, callback) => { callback(null, generateFilename(file)); }, }); 
+    
+  export const PdfFilter = (req, file, cb) => { 
+    let isValid = false; 
+    if (isMimeTypePdf(file.mimetype)) { isValid = true; } 
+    if (!isValid) { req.fileValidationError = 'Goes wrong on the PDF FileType'; 
+    cb(null, false, new Error('Goes wrong on the PDF FileType'));
+
+   } 
+   cb(null, true); }; 
+
+  const isMimeTypePdf = (mimetype: string): boolean => { return mimetype === 'application/pdf'; };
